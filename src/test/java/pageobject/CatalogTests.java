@@ -17,7 +17,7 @@ public class CatalogTests {
         homePage.acceptCookies();
         homePage.searchFor(PRODUCT_TO_FIND);
 
-        SearchResultPage resultPage = new SearchResultPage(baseFunc);
+//        SearchResultPage resultPage = new SearchResultPage(baseFunc);
         //....
     }
 }
