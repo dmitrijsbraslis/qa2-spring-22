@@ -2,7 +2,7 @@ package requesters;
 
 import io.cucumber.core.internal.com.fasterxml.jackson.core.JsonProcessingException;
 import io.cucumber.core.internal.com.fasterxml.jackson.databind.ObjectMapper;
-import model.WeatherResponse;
+import model.weather.WeatherResponse;
 import org.springframework.web.client.RestTemplate;
 
 public class WeatherRequester {

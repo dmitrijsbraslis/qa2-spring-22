@@ -1,4 +1,4 @@
-package model;
+package model.weather;
 
 public class Coord {
     private double lon;

@@ -4,7 +4,7 @@ import io.cucumber.core.internal.com.fasterxml.jackson.core.JsonProcessingExcept
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import model.WeatherResponse;
+import model.weather.WeatherResponse;
 import org.junit.jupiter.api.Assertions;
 import requesters.WeatherRequester;
 
