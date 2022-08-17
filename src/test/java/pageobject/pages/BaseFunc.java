@@ -2,10 +2,14 @@ package pageobject.pages;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
+
+import static java.lang.String.*;
+import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
 public class BaseFunc {
     private WebDriver driver;
@@ -20,13 +24,6 @@ public class BaseFunc {
     }
 
     public void openUrl(String url) {
-//        if (url.startsWith("http://") || url.startsWith("https://")) {
-//
-//        } else {
-//            url = "http://" + url;
-//        }
-
-        // !true -> false        !false -> true   ! = "не"
         if (!url.startsWith("http://") && !url.startsWith("https://")) {
             url = "http://" + url;
         }
@@ -35,7 +32,7 @@ public class BaseFunc {
     }
 
     public void click(By locator) {
-        WebElement we = wait.until(ExpectedConditions.elementToBeClickable(locator));
+        WebElement we = wait.until(elementToBeClickable(locator));
 
         try {
             we.click();
@@ -52,11 +49,24 @@ public class BaseFunc {
         we.sendKeys(text);
     }
 
+    public void type(By locator, int text) {
+        type(locator, valueOf(text));
+    }
+
     public void pressKey(By locator, Keys key) {
         findElement(locator).sendKeys(key);
     }
 
     public WebElement findElement(By locator) {
-        return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+        return wait.until(presenceOfElementLocated(locator));
+    }
+
+    public List<WebElement> findElements(By locator) {
+        return driver.findElements(locator);
+    }
+
+    public void select(By locator, String text) {
+        Select select = new Select(findElement(locator));
+        select.selectByVisibleText(text);
     }
 }

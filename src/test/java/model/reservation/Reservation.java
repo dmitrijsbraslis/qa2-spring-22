@@ -21,19 +21,10 @@ public class Reservation {
                        String departureAirport, String arrivalAirport, int seatNumber,
                        int adultsCount, int childCount, int bagsCount) {
 
-//        if (firstName.equals("random")) {
-//            this.firstName = RandomStringUtils.randomAlphabetic(10);
-//        } else {
-//            this.firstName = firstName;
-//        }
-
         this.firstName = firstName.equals("random") ? RandomStringUtils.randomAlphabetic(10) : firstName;
+        this.lastName = lastName.equals("random") ? RandomStringUtils.randomAlphabetic(10) : lastName;
+        this.discount = discount.equals("random") ? RandomStringUtils.randomAlphabetic(6) : discount;
 
-
-        this.lastName = lastName;
-
-
-        this.discount = discount;
         this.flightDate = flightDate;
         this.departureAirport = departureAirport;
         this.arrivalAirport = arrivalAirport;

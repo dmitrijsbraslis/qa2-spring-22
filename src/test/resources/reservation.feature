@@ -2,11 +2,11 @@ Feature: Ticket reservation
 
   Scenario: Successful ticket reservation
     Given random client with:
-      | discount    | CCCCCC     |
-      | flight_date | 13-05-2018 |
-
-    And client is flying from "MEL" to "JFC"
-    And seat number is 21
+      | discount     | CCCCCC     |
+      | flight_date  | 13-05-2018 |
+      | airport_from | MEL        |
+      | airport_to   | JFC        |
+      | seat_number  | 21         |
 
     And home page is opened
 
