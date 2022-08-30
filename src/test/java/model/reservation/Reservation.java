@@ -1,17 +1,37 @@
 package model.reservation;
 
+import io.cucumber.core.internal.com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.cucumber.core.internal.com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.RandomStringUtils;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Reservation {
+    @JsonProperty("name")
     private String firstName;
+
+    @JsonProperty("surname")
     private String lastName;
     private String discount;
+
+    @JsonProperty("flight")
     private String flightDate;
+
+    @JsonProperty("afrom")
     private String departureAirport;
+
+    @JsonProperty("ato")
     private String arrivalAirport;
+
+    @JsonProperty("seat")
     private int seatNumber;
+
+    @JsonProperty("adults")
     private int adultsCount;
+
+    @JsonProperty("children")
     private int childCount;
+
+    @JsonProperty("bugs")
     private int bagsCount;
 
     public Reservation() {

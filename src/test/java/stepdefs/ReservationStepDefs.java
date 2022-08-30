@@ -1,13 +1,16 @@
 package stepdefs;
 
+import io.cucumber.core.internal.com.fasterxml.jackson.core.JsonProcessingException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import model.reservation.Reservation;
 import org.openqa.selenium.WebElement;
 import pageobject.pages.BaseFunc;
+import pageobject.pages.SeatSelectionPage;
 import pageobject.pages.TicketsHomePage;
 import pageobject.pages.UserInfoPage;
+import requesters.ReservationsRequester;
 
 import java.util.List;
 import java.util.Map;
@@ -20,6 +23,9 @@ public class ReservationStepDefs {
     private BaseFunc baseFunc = new BaseFunc();
     private TicketsHomePage homePage;
     private UserInfoPage infoPage;
+    private SeatSelectionPage seatSelectionPage;
+    private List<Reservation> response;
+    private Reservation reservationFromApi;
 
     private final String HOME_PAGE_URL = "http://qaguru.lv:8089/tickets";
 
@@ -53,5 +59,56 @@ public class ReservationStepDefs {
     @When("we are filling in passenger info form")
     public void fill_passenger_info_form() {
         infoPage.fillInInfoForm(reservation);
+    }
+
+    @When("we are clicking on Get Price link")
+    public void pres_get_price_link() {
+        infoPage.pressGetPriceBtn();
+    }
+
+    @Then("passenger name appears")
+    public void check_passenger_name() {
+        assertEquals(reservation.getFirstName(), infoPage.getPassengerName(), "Wrong passenger name!");
+    }
+
+    @Then("price is: {int} EUR")
+    public void check_price(int price) {
+        assertEquals(price, infoPage.getPrice(), "Wrong Price!");
+    }
+
+    @When("we are pressing Book button")
+    public void submit_user_info() {
+        infoPage.pressBookBtn();
+        seatSelectionPage = new SeatSelectionPage(baseFunc);
+    }
+
+    @When("selecting seat number")
+    public void select_seat() {
+        seatSelectionPage.selectSeat(reservation.getSeatNumber());
+    }
+
+    @When("we are requesting all reservations via API")
+    public void request_reservations() throws JsonProcessingException {
+        ReservationsRequester requester = new ReservationsRequester();
+        response = requester.requestReservations();
+    }
+
+    @When("we found created reservation")
+    public void find_reservation() {
+        for (Reservation r : response) {
+            if (r.getFirstName().equals(reservation.getFirstName())) {
+                reservationFromApi = r;
+                break;
+            }
+        }
+
+        assertNotNull(reservationFromApi, "Can't find created reservation!");
+    }
+
+    @Then("all data stored correctly")
+    public void check_reservation_data() {
+        assertEquals(reservation.getLastName(), reservationFromApi.getLastName(), "Wrong Last Name!");
+        assertEquals(reservation.getDiscount(), reservationFromApi.getDiscount(), "Wrong Discount!");
+        //........
     }
 }

@@ -14,10 +14,10 @@ Feature: Ticket reservation
     Then selected airports appears on client info page
 
     When we are filling in passenger info form
-    And we are clicking on Get Price ling
+    And we are clicking on Get Price link
 
     Then passenger name appears
-    And price is shown
+    And price is: 770 EUR
 
     When we are pressing Book button
     And selecting seat number

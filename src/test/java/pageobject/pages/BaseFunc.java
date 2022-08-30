@@ -2,6 +2,7 @@ package pageobject.pages;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -29,6 +30,10 @@ public class BaseFunc {
         }
 
         driver.get(url);
+    }
+
+    public void click(WebElement we) {
+        wait.until(elementToBeClickable(we)).click();
     }
 
     public void click(By locator) {
@@ -68,5 +73,9 @@ public class BaseFunc {
     public void select(By locator, String text) {
         Select select = new Select(findElement(locator));
         select.selectByVisibleText(text);
+    }
+
+    public void waitForElementCountAtLeast(By locator, int minCount) {
+        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(locator, minCount));
     }
 }

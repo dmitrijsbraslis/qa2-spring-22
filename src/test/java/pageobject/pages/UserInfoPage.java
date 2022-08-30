@@ -1,6 +1,7 @@
 package pageobject.pages;
 
 import model.reservation.Reservation;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -15,6 +16,9 @@ public class UserInfoPage {
     private final By CHILDREN = By.id("children");
     private final By BAGS = By.id("bugs");
     private final By FLIGHT = By.id("flight");
+    private final By GET_PRICE_BTN = By.xpath(".//span[@onclick = 'setLang();']");
+    private final By GET_PRICE_RESPONSE = By.id("response");
+    private final By BOOK_BTN = By.id("book2");
 
     private BaseFunc baseFunc;
 
@@ -34,5 +38,23 @@ public class UserInfoPage {
         baseFunc.type(CHILDREN, reservation.getChildCount());
         baseFunc.type(BAGS, reservation.getBagsCount());
         baseFunc.select(FLIGHT, reservation.getFlightDate());
+    }
+
+    public void pressGetPriceBtn() {
+        baseFunc.click(GET_PRICE_BTN);
+    }
+
+    public String getPassengerName() {
+        String responseText = baseFunc.findElement(GET_PRICE_RESPONSE).getText();
+        return StringUtils.substringBetween(responseText, "Mr/Ms ", "!");
+    }
+
+    public int getPrice() {
+        String responseText = baseFunc.findElement(GET_PRICE_RESPONSE).getText();
+        return Integer.parseInt(StringUtils.substringBetween(responseText, "to for ", " EUR"));
+    }
+
+    public void pressBookBtn() {
+        baseFunc.click(BOOK_BTN);
     }
 }
