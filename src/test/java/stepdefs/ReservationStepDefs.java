@@ -6,10 +6,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import model.reservation.Reservation;
 import org.openqa.selenium.WebElement;
-import pageobject.pages.BaseFunc;
-import pageobject.pages.SeatSelectionPage;
-import pageobject.pages.TicketsHomePage;
-import pageobject.pages.UserInfoPage;
+import pageobject.pages.*;
 import requesters.ReservationsRequester;
 
 import java.util.List;
@@ -26,6 +23,7 @@ public class ReservationStepDefs {
     private SeatSelectionPage seatSelectionPage;
     private List<Reservation> response;
     private Reservation reservationFromApi;
+    private FinalPage finalPage;
 
     private final String HOME_PAGE_URL = "http://qaguru.lv:8089/tickets";
 
@@ -45,8 +43,8 @@ public class ReservationStepDefs {
     @When("we are selecting airports")
     public void select_airports() {
         homePage.selectAirports(reservation);
-        homePage.pressGoBtn();
-        infoPage = new UserInfoPage(baseFunc);
+        infoPage = homePage.pressGoBtn();
+//        infoPage = new UserInfoPage(baseFunc);
     }
 
     @Then("selected airports appears on client info page")
@@ -78,13 +76,29 @@ public class ReservationStepDefs {
 
     @When("we are pressing Book button")
     public void submit_user_info() {
-        infoPage.pressBookBtn();
-        seatSelectionPage = new SeatSelectionPage(baseFunc);
+        seatSelectionPage = infoPage.pressBookBtn();
+//        seatSelectionPage = new SeatSelectionPage(baseFunc);
     }
 
     @When("selecting seat number")
     public void select_seat() {
         seatSelectionPage.selectSeat(reservation.getSeatNumber());
+    }
+
+    @Then("selected seat number appears")
+    public void check_seat_nr() {
+        assertEquals(reservation.getSeatNumber(), seatSelectionPage.getSelectedSeatNr(), "Seat nr is not corret!");
+    }
+
+    @When("we are placing the order")
+    public void place_order() {
+        finalPage = seatSelectionPage.pressBookBtn();
+//        finalPage = new FinalPage(baseFunc);
+    }
+
+    @Then("successful booking page appears")
+    public void check_if_success() {
+        assertTrue(finalPage.isReservationSuccessful(), "Reservation isn't successful!");
     }
 
     @When("we are requesting all reservations via API")

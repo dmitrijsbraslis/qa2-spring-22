@@ -54,7 +54,8 @@ public class UserInfoPage {
         return Integer.parseInt(StringUtils.substringBetween(responseText, "to for ", " EUR"));
     }
 
-    public void pressBookBtn() {
+    public SeatSelectionPage pressBookBtn() {
         baseFunc.click(BOOK_BTN);
+        return new SeatSelectionPage(baseFunc);
     }
 }

@@ -19,7 +19,8 @@ public class TicketsHomePage {
         baseFunc.select(TO, reservation.getArrivalAirport());
     }
 
-    public void pressGoBtn() {
+    public UserInfoPage pressGoBtn() {
         baseFunc.click(GO_BTN);
+        return new UserInfoPage(baseFunc);
     }
 }

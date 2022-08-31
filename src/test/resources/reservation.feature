@@ -17,7 +17,7 @@ Feature: Ticket reservation
     And we are clicking on Get Price link
 
     Then passenger name appears
-    And price is: 770 EUR
+    And price is: 945 EUR
 
     When we are pressing Book button
     And selecting seat number
